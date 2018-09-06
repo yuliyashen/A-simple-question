@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>A simple question</title>
+
+        <style>
+            html {
+                font-family: serif
+            }
+
+            body {
+                width: 50%;
+                max-width: 800px;
+                min-width: 400px;
+                margin: 0 auto;
+                text-align: center
+            }
+
+            button {
+                background-color: #6ba5d7;
+                border: none;
+                border-radius: 12px;
+                color: white;
+                padding: 8px 16px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+            }
+            
+            button:hover {
+                cursor: pointer;
+            }
+
+            .btn{margin-left: 15px;}
+        </style>
+    </head>
+
+    <body>
+        <h1>A simple question</h1>
+        <img id='image' src="pics/penguin-cartoon.jpg" alt="Penguin" height="154" width="204">
+
+        <p class="question">企鹅是最可爱的动物吗</p>
+        <button class="btn" id="good">是的</button>
+        <button class="btn" id="bad">不是</button>
+        
+        <script>
+            var goodButton = document.querySelector("#good");
+            var badButton = document.querySelector("#bad");
+            var question = document.querySelector('.question');
+            var image = document.getElementById('image');
+            
+            goodButton.addEventListener('click', updateGoodButton);
+            badButton.addEventListener('click', updateBadButton);
+
+            Element.prototype.remove = function() {
+                this.parentElement.removeChild(this);
+            }
+            NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+                for(var i = this.length - 1; i >= 0; i--) {
+                    if(this[i] && this[i].parentElement) {
+                        this[i].parentElement.removeChild(this[i]);
+                    }
+                }
+            }
+
+            function updateGoodButton() {
+                if (goodButton.textContent === '是的'){
+                    question.textContent = '我超级萌，么么哒～～～';
+                    question.style.fontSize = '200%';
+                    document.getElementsByClassName('btn').remove();
+                }
+                else if (goodButton.textContent === '我知错了，返回主页' || '重新选择') {
+                    question.textContent = '企鹅是最可爱的动物吗';
+                    goodButton.textContent = '是的';
+                    badButton.textContent = '不是';
+                    badButton.style.backgroundColor = '#6ba5d7';
+                    image.src = 'pics/penguin-cartoon.jpg';
+                    image.height = 154
+                }
+            }
+
+            function updateBadButton() {
+                if (badButton.textContent === '不是'){
+                    goodButton.textContent = '重新选择';
+                    badButton.textContent = '跪搓衣板';
+                    question.textContent = '哼，太差了';
+                }
+                else if (badButton.textContent === '跪搓衣板'){
+                    question.textContent = '知错了吗';
+                    goodButton.textContent = '我知错了，返回主页';
+                    badButton.textContent = '死不悔改';
+                    badButton.style.backgroundColor = 'red';
+                    image.src = 'pics/punishment.jpg';
+                    image.height = 204;
+                }
+                else if (badButton.textContent === '死不悔改'){
+                    question.textContent = '404 Penguin Not Found'
+                    question.style.fontSize = '200%';
+                    question.style.color = 'red';
+                    document.getElementsByClassName('btn').remove();
+                    image.src = 'pics/404.jpg'
+                    image.height = 154
+                }
+            }
+        </script>
+    </body>
+</html>
